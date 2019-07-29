@@ -1,0 +1,34 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Insert Company</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <label for="name">Name</label><input id="name" type="text" class="form-control">
+                    <label for="address">Address</label><input id="address" type="text" class="form-control">
+                </div>
+                <div class="row">
+                    <label for="type">Type</label>
+                    <select id="type">
+                        <option value="-1" selected>Choose...</option>
+                        <?php
+                        foreach($types as $type){
+                        ?>
+                        <option value="<?php echo $type->id?>"><?php echo $type->naming_conv?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="insert_company">Add company</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
+        </div>
+    </div>
+</div>
