@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="row">
+        <h2>Company details</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-lg">
+            <label for="details_name">Name</label><input id="details_name" class="form-control" value="<?php echo $details->name?>"">
+            <label for="details_address">Address</label><input id="details_address" class="form-control" value="<?php echo $details->address?>"">
+            <label for="details_type">Type</label>
+            <select id="details_type">
+                <option value="-1">Choose...</option>
+                <?php
+                foreach($types as $type){
+                ?>
+                <option value="<?php echo $type->id?>" <?php if($details->typeid == $type->id) {echo "selected";} ?>><?php echo $type->naming_conv?></option>
+                <?php
+                }
+                ?>
+            </select>
+        </div>
+        <div class="col-lg pull-right">
+            <button class="btn btn-sm btn-success" id="details_save">Save</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <h2>Company's Contacts</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-lg">
+            <table class="table table-striped">
+                <thead>
+                    <td>#</td>
+                    <td>Contact</td>
+                    <td><button id="contact_add" class="btn btn-sm btn-success">Add</button></td>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach($contacts as $contact){
+                    ?>
+                        <tr>
+                            <td><?php echo $contact->id; ?></td>
+                            <td><?php echo $contact->get_header(); ?></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary contact-modify" data-id="<?php echo $contact->id; ?>">Edit</button>
+                                <button class="btn btn-sm btn-danger contact-delete" data-id="<?php echo $contact->id; ?>">Delete</button>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

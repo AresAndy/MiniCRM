@@ -25,11 +25,11 @@ class MiniCRMFactory {
 
             switch($type){
                 case "client":
-                $valid = new ClientCompany($record["id"], $record["name"], $record["address"], $type);
+                $valid = new ClientCompany($record["id"], $record["type"], $type, $record["name"], $record["address"]);
                 break;
 
                 case "supplier":
-                $valid = new SupplierCompany($record["id"], $record["name"], $record["address"], $type);
+                $valid = new SupplierCompany($record["id"], $record["type"], $type, $record["name"], $record["address"]);
                 break;
 
                 default:
@@ -41,7 +41,7 @@ class MiniCRMFactory {
             }
         }
 
-        $this->container->get('logger')->info(var_export($companies, true));
+        //$this->container->get('logger')->info(var_export($companies, true));
         
         return $companies;
     }
