@@ -5,6 +5,6 @@ A tiny CRM using the Slim Framework
 
 To run the application in development, you can run these commands 
 
-	cd [my-app-name]
+	cd [projdir]
 	composer start
 
