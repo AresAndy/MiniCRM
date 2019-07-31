@@ -21,12 +21,6 @@ return function (App $app) {
 
     // view renderer
     $container['renderer'] = function ($c) {
-        /*
-        $settings = $c->get('settings');
-        $c->get('logger')->info("template path: {$settings['template_path']}");
-        return new MiniCRM\Sys\MustacheRenderer($settings['template_path']);
-        */
-
         $settings = $c->get('settings')['renderer'];
         return new \Slim\Views\PhpRenderer($settings['template_path']);
     };

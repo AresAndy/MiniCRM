@@ -7,11 +7,26 @@ $(function(){
         } else {
             $("#bl").removeClass("bl");
         }
-    }
+    };
+
+    alertmsg = function(){
+        alert("Something went wrong...");
+    };
+
+    xhr_fail = function(){
+        alertmsg();
+    };
+
+    xhr_always = bl.bind(null, false);
+
+    validate_company = function(){
+
+    };
 
     $("#add").click(() => {
         $(".modal").load("/modal_insert_company", () => {
-            $(".modal").modal();
+            let modalsel = $(".modal");
+            modalsel.modal();
 
             $("#insert_company").click(function(e) {
                 e.preventDefault();
@@ -46,22 +61,20 @@ $(function(){
                     address: address,
                     type: type
                 })
-                .fail(() => {
-                    alert("Something went wrong...");
-                })
+                .fail(xhr_fail)
                 .done((json) => {
                     try{
                         if(json.result >= 0){
                             alert("company inserted");
                             location.reload();
                         } else {
-                            alert("Something went wrong...");
+                            alertmsg();
                         }
                     } catch(e) {
-                        alert("Something went wrong...");
+                        alertmsg();
                     }
                 })
-                .always(bl.bind(null, false));
+                .always(xhr_always);
             });
         });
     });
@@ -72,27 +85,26 @@ $(function(){
         if(confirm("Are you sure you want to remove this company?")){
             bl(true);
                 $.post("/delete_company/" + id)
-                .fail(() => {
-                    alert("Something went wrong...");
-                })
+                .fail(xhr_fail)
                 .done((json) => {
                     try{
                         if(json.result >= 0){
                             alert("Company deleted");
                             location.reload();
                         } else {
-                            alert("Something went wrong...");
+                            alertmsg();
                         }
                     } catch(e) {
-                        alert("Something went wrong...");
+                        alertmsg();
                     }
                 })
-                .always(bl.bind(null, false));
+                .always(xhr_always);
         }
     });
 
     $(".modify").click(function ()  {
-        let id = $(this).data("id");
+        let modifybtn = $(this);
+        let id = modifybtn.data("id");
 
         bl(true);
         $(".companydetails").load("/company_details/" + id, function(){
@@ -148,27 +160,26 @@ $(function(){
                     address: address,
                     type: type
                 })
-                .fail(() => {
-                    alert("Something went wrong...");
-                })
+                .fail(xhr_fail)
                 .done((json) => {
                     try{
                         if(json.result >= 0){
                             alert("company updated");
-                            location.reload();
+                            location.reload()
                         } else {
-                            alert("Something went wrong...");
+                            alertmsg();
                         }
                     } catch(e) {
-                        alert("Something went wrong...");
+                        alertmsg();
                     }
                 })
-                .always(bl.bind(null, false));
+                .always(xhr_always);
             });
 
             $("#contact_add").click(() => {
                 $(".modal").load("/modal_insert_contact", () => {
-                    $(".modal").modal();
+                    let modalsel = $(".modal");
+                    modalsel.modal();
         
                     $("#insert_contact").click(function(e) {
                         e.preventDefault();
@@ -188,23 +199,21 @@ $(function(){
                             name: name,
                             phone: phone
                         })
-                        .fail(() => {
-                            alert("Something went wrong...");
-                        })
+                        .fail(xhr_fail)
                         .done((json) => {
                             try{
                                 if(json.result >= 0){
                                     alert("Contact inserted");
-                                    location.reload();
-                                    $(".modify[data-id='" + id + "']").click();
+                                    modalsel.modal("hide");
+                                    modifybtn.click();
                                 } else {
-                                    alert("Something went wrong...");
+                                    alertmsg();
                                 }
                             } catch(e) {
-                                alert("Something went wrong...");
+                                alertmsg();
                             }
                         })
-                        .always(bl.bind(null, false));
+                        .always(xhr_always);
                     });
                 });
             });
@@ -213,7 +222,8 @@ $(function(){
                 let id = $(this).data("id");
 
                 $(".modal").load("/modal_modify_contact/" + id, () => {
-                    $(".modal").modal();
+                    let modalsel = $(".modal");
+                    modalsel.modal();
 
                     $("#update_contact").click(function(e) {
                         e.preventDefault();
@@ -233,22 +243,21 @@ $(function(){
                             name: name,
                             phone: phone
                         })
-                        .fail(() => {
-                            alert("Something went wrong...");
-                        })
+                        .fail(xhr_fail)
                         .done((json) => {
                             try{
                                 if(json.result >= 0){
                                     alert("Contact updated");
-                                    location.reload();
+                                    modalsel.modal("hide");
+                                    modifybtn.click();
                                 } else {
-                                    alert("Something went wrong...");
+                                    alertmsg();
                                 }
                             } catch(e) {
-                                alert("Something went wrong...");
+                                alertmsg();
                             }
                         })
-                        .always(bl.bind(null, false));
+                        .always(xhr_always);
                     });
                 });
             });
@@ -259,22 +268,20 @@ $(function(){
                 if(confirm("Are you sure you want to remove this contact?")){
                     bl(true);
                     $.post("/delete_contact/" + id)
-                    .fail(() => {
-                        alert("Something went wrong...");
-                    })
+                    .fail(xhr_fail)
                     .done((json) => {
                         try{
                             if(json.result >= 0){
                                 alert("Contact deleted");
-                                $(".modify[data-id='" + id + "'").click();
+                                modifybtn.click();
                             } else {
-                                alert("Something went wrong...");
+                                alertmsg();
                             }
                         } catch(e) {
-                            alert("Something went wrong...");
+                            alertmsg();
                         }
                     })
-                    .always(bl.bind(null, false));
+                    .always(xhr_always);
                 }
             });
 

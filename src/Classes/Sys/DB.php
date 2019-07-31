@@ -2,6 +2,9 @@
 
 namespace MiniCRM\Sys;
 
+/**
+ * This singleton wraps around PDO, and allows to use SQLite for local test & runs
+ */
 class DB {
     private static $instance;
     private $conn;
@@ -11,6 +14,9 @@ class DB {
     private $pass = 'minicrm'; // fairly unsafe, will do for just proof of concept
     private $name = 'MiniCRM_DB';
     
+    /**
+     * @param bool $local determines if this needs to use SQLite or a MySQL connection
+     */
     private function __construct($local = false) {
         if($local){
             $reflection = new \ReflectionClass(\Composer\Autoload\ClassLoader::class);
@@ -33,6 +39,9 @@ class DB {
         $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
+    /**
+     * Starts a connection or return the previously created one
+     */
     public static function init($local = false) : DB {
         if(!self::$instance) {
             self::$instance = new DB($local);
@@ -41,6 +50,9 @@ class DB {
         return self::$instance;
     }
 
+    /**
+     * Gets the PDO handle
+     */
     public function conn(): \PDO {
         return $this->conn;
     }
